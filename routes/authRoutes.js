@@ -3,16 +3,16 @@ const authRoutes = express.Router();
 
 //import { authenticateUser } from '../middleware/authentication.js';
 
-// import{
-//   register,
+import{
+  register,
 //   login,
 //   logout,
-// //   verifyEmail,
-// //   forgotPassword,
-// //   resetPassword,
-// } from '../controllers/authController.js';
+//   verifyEmail,
+//   forgotPassword,
+//   resetPassword,
+} from '../controllers/authController.js';
 
-//authRoutes.post('/register', register);
+authRoutes.post('/register', register);
 //authRoutes.post('/login', login);
 //authRoutes.delete('/logout', authenticateUser, logout);
 

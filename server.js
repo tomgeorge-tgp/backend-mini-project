@@ -5,6 +5,16 @@ import bodyParser from 'body-parser';
 import db from "./db/connect.js";
 import useAppRoutes from './routes/appRoutes.js';
 import dotenv from "dotenv";
+import googleapi from "./api/index.js";
+
+googleapi( "This is the best counseling website I've ever used. Thank you for all your help!")
+  .then(data => {
+    console.log(JSON.stringify(data, null, 2));
+  })
+  .catch(err => {
+    console.error(err);
+  });
+
 
 dotenv.config();
 const app = express();

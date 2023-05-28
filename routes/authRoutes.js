@@ -5,7 +5,7 @@ const authRoutes = express.Router();
 
 import{
   register,
-//   login,
+  login,
 //   logout,
 //   verifyEmail,
 //   forgotPassword,
@@ -13,7 +13,7 @@ import{
 } from '../controllers/authController.js';
 
 authRoutes.post('/register', register);
-//authRoutes.post('/login', login);
+authRoutes.post('/login', login);
 //authRoutes.delete('/logout', authenticateUser, logout);
 
 

@@ -1,5 +1,5 @@
 import express from 'express';
-//import cookieParser from 'cookie-parser'
+import cookieParser from 'cookie-parser'
 import http from 'http';
 import bodyParser from 'body-parser';
 import db from "./db/connect.js";
@@ -7,13 +7,13 @@ import useAppRoutes from './routes/appRoutes.js';
 import dotenv from "dotenv";
 import googleapi from "./api/index.js";
 
-googleapi( "This is the best counseling website I've ever used. Thank you for all your help!")
-  .then(data => {
-    console.log(JSON.stringify(data, null, 2));
-  })
-  .catch(err => {
-    console.error(err);
-  });
+// googleapi( "I'm sorry to hear that you're feeling depressed, and I want you to know that it's okay to feel that way. Sometimes life can be challenging, and it's normal to experience ups and downs. However, it's important to remember that things can and will get better. You have the strength and resilience to overcome these tough times, and there are people who care about you and want to support you. It's okay to reach out for help, whether it's from a friend, family member, or professional. You are not alone, and there is always hope for a brighter future. Remember that each day is a new opportunity to take small steps towards feeling better, and every step counts. Keep pushing forward, and don't give up on yourself. You are worthy of love and happiness, and I believe in you.")
+//   .then(data => {
+//     console.log(JSON.stringify(data, null, 2));
+//   })
+//   .catch(err => {
+//     console.error(err);
+//   });
 
 
 dotenv.config();
@@ -33,8 +33,8 @@ const corsOptions ={
 
   //app.use(cors(corsOptions))
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(express.json());
- // app.use(cookieParser(process.env.JWT_SECRET));
+  app.use(express.json()); // to know the data send is json type
+ app.use(cookieParser());
   useAppRoutes(app);
 
 

@@ -1,38 +1,59 @@
-const register = async (req, res) => {
-   // const { firstName,lastName,phoneNumber,email,password,address,city,state,country,zipCode } = req.body;
+import User from "../models/User.js";
+import bcrypt from "bcrypt"
+import jwt from 'jsonwebtoken'
+import { handleError } from "../error.js";
+
+const register = async (req, res,next) => {
+    // const { fulName,lastName,phoneNumber,email,password,address,city,state,country,zipCode } = req.body;
     console.log(req.body);
-    // const emailAlreadyExists = await User.findOne({ email });
-    // if (emailAlreadyExists) {
-    //   throw new CustomError.BadRequestError('Email already exists');
-    // }
-  
-    // first registered user is an admin
-    // const isFirstAccount = (await User.countDocuments({})) === 0;
-    // const role = isFirstAccount ? 'admin' : 'user';
-  
-    // const verificationToken = crypto.randomBytes(40).toString('hex');
-  
-    // const user = await User.create({
-    //   firstName,
-    //   lastName,
-    //   phoneNumber,
-    //   email,
-    //   password,
-     
-    // });
-    //const origin = 'http://localhost:3000';
-  
-   //console.log("here",user);
-  
-    // res.status(StatusCodes.CREATED).json({
-    //   msg: 'Success! Please check your email to verify account'
-    //   ,user:{_id: user._id,firstName:user.firstName,lastName:user.lastName,phoneNumber:user.phoneNumber,email:user.email}, errors: []
-    // });
-   };
+    try{
+
+    
+    const currentUserEmail = req.body.email;
+    const userType=req.body.type;
+    const emailAlreadyExists = await User.findOne({ currentUserEmail });
+    if (emailAlreadyExists) {
+      throw new CustomError.BadRequestError('Email already exists');
+    }
+    const salt= bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(req.body.password,salt);
+    const newUser =new User({...req.body,password:hash});
+    await newUser.save();
+
+    const token =jwt.sign({id:newUser._id},process.env.JWT);
+    const {password,...otherData}=newUser._doc;
+    res.cookie("access_token",token,{
+      httpOnly:true,
+    }).status(200).json(otherData);
+  }
+  catch (err) {
+     next(err);
+  }
+}
+
+const login =async(req,res,next)=>{
+  try{
+     const user = await User.findOne({email:req.body.email});
+     if (!user) return next(handleError(404,"User not found"));
+     const isCorrect = await bcrypt.compare(req.body.password,user.password);
+
+     if (!isCorrect) return next(handleError(404,"Invalid password"));
+
+     const token =jwt.sign({id:user._id},process.env.JWT);
+     const {password,...otherData} = user._doc;
+
+     response.cookie("access_token",token,{httpOnly:true}).status(200).json(otherData);
+  }catch(err)
+  {
+    next(err); 
+  }
+}
+
+
 
    export {
     register,
-    // login,
+    login,
     // logout,
     
   };

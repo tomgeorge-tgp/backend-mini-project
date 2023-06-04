@@ -24,12 +24,14 @@ const UserSchema =new mongoose.Schema({
     },
     year:{
         type:String,
+        
     },
     role:{
         type:String,
     },
     department:{
         type:String,
+        
     }
 },{timestamps:true}
 );

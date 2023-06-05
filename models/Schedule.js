@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const ScheduleSchema =new mongoose.Schema({
-    userId:{
+    counsellorid:{
         type:String,
         required:true,
     },
@@ -28,6 +28,6 @@ const ScheduleSchema =new mongoose.Schema({
     
 
 })
-
+ScheduleSchema.index({userId:1,start:1,end:1},{unique:true})
 
 export default mongoose.model("Schedule", ScheduleSchema);

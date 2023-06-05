@@ -1,10 +1,10 @@
- mongoose =require( "mongoose")
-const BookingSchema =new mongoose.schema({
+ import mongoose from  "mongoose"
+const BookingSchema =new mongoose.Schema({
     counsellorid:{
         type:String,
         required:true,
     },
-    Userid:{
+    userid:{
         type:String,
         required:true,
     },
@@ -22,8 +22,10 @@ const BookingSchema =new mongoose.schema({
         required:true,
 
     },
-    issue:{
-        type:String,
+    
+    status:{
+        type:Boolean,
+        default:true,
     }
     
 

@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+ mongoose =require( "mongoose")
 const BookingSchema =new mongoose.schema({
-    counselloremail:{
+    counsellorid:{
         type:String,
         required:true,
     },
-    Useremail:{
+    Userid:{
         type:String,
         required:true,
     },
@@ -21,9 +21,12 @@ const BookingSchema =new mongoose.schema({
         type:Date,
         required:true,
 
+    },
+    issue:{
+        type:String,
     }
     
 
 })
 
-export default mongoose.model("Schedule", ScheduleSchema);
+export default mongoose.model("Booking", BookingSchema);

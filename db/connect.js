@@ -7,8 +7,11 @@ dotenv.config();
 const db=mongoose
 db.connect(process.env.MONGO_URI)
 
+
+
 .then(() => console.log("Connected to database"))
 .catch((err) => console.error("Could not connect to database", err));
+
 
 
 // db.connect((error) => {

@@ -42,7 +42,8 @@ const login =async(req,res,next)=>{
      const token =jwt.sign({id:user._id},process.env.JWT);
      const {password,...otherData} = user._doc;
 
-     response.cookie("access_token",token,{httpOnly:true}).status(200).json(otherData);
+     res.cookie("access_token",token,{httpOnly:true}).status(200).json(otherData);
+     console.log("Access token",token)
   }catch(err)
   {
     next(err); 

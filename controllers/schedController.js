@@ -19,7 +19,9 @@ export const schedSession=async(req,res)=>{
         let currentSessionStart = new Date(start);
         
         const End=new Date(end)
-        
+        if (currentSessionStart>End){
+            return res.status(409).json("End is less than start Request denied")
+        }
         while (currentSessionStart < End) {
         const currentSessionEnd = new Date(currentSessionStart.getTime() + sessionDuration);
         
@@ -38,13 +40,16 @@ export const schedSession=async(req,res)=>{
         let savedSession=await saveNewSession.save()
         console.log(savedSession)}
         catch(error){
-            //console.log(error)
+            
             handleError(409,error)
-            return res.status(409)
+            console.log("error1")
+            return res.status(409).json(saveNewSession+"session is repeated")
+            
         }
         currentSessionStart = new Date(currentSessionEnd);
        
         }
+        console.log("hi")
         res.status(200).json(req.body)
     }
     catch(err){
@@ -114,6 +119,7 @@ export const bookSes=async(req,res)=>{
             end:schedule.end,
             
         }
+
         schedule.status=false
         await schedule.save()
         console.log("update")
@@ -121,6 +127,8 @@ export const bookSes=async(req,res)=>{
         console.log(bookSession)
         const saveBookSession=new Book(bookSession)
         const savedBookSession=await saveBookSession.save()
+        
+        
         res.status(200).json(savedBookSession)
 
 

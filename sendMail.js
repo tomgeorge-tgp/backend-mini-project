@@ -1,19 +1,21 @@
 // const nodemailer = require('nodemailer');
 import nodemailer from  'nodemailer'
+import dotenv from "dotenv"
+dotenv.config();
 
 // Create a transporter using SMTP
-const transporter = nodemailer.createTransport({
+export const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',  // SMTP server hostname
-  port: 587,                 // SMTP server port
+  port: 465,                 // SMTP server port
   secure: true,              // Set to true if using SSL/TLS
   auth: {
     user: 'sumeghkrishna123@gmail.com',   // SMTP username/email
-    pass: 'ejlcktnxuhyvybjh',             // SMTP password
+    pass: process.env.Pass,             // SMTP password
   },
 });
 
 // Define the email options
-const mailOptions = {
+export let mailOptions = {
   from: 'sumeghkrishna123@gmail.com',       // Sender email address
   to: 'sumeghspai@gmail.com' ,         // Recipient email address
   subject: 'Hello akash from Node.js',        // Email subject

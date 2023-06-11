@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/tomgeorge-tgp/mini-project-backend#readme",
   "dependencies": {
-    "@tensorflow/tfjs": "^4.6.0",
     "all": "^0.0.0",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
@@ -33,7 +32,6 @@
     "moment": "^2.29.4",
     "mongoose": "^7.2.2",
     "nodemailer": "^6.9.3",
-    "nodemon": "^2.0.21",
-    "tensorflow.js": "^0.0.0"
+    "nodemon": "^2.0.21"
   }
 }

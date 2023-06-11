@@ -10,8 +10,7 @@ const register = async (req, res,next) => {
 
     
     const currentUserEmail = req.body.email;
-    // const userType=req.body.type;
-    // console.log(userType);
+    const userType=req.body.type;
     const emailAlreadyExists = await User.findOne({ currentUserEmail });
     if (emailAlreadyExists) {
       throw new CustomError.BadRequestError('Email already exists');
@@ -44,14 +43,8 @@ const login =async(req,res,next)=>{
      const token =jwt.sign({id:user._id},process.env.JWT);
      const {password,...otherData} = user._doc;
 
-
-    //  res.cookie("access_token",token,{httpOnly:true}).status(200).json(otherData);
-    //  console.log("Access token",token)
-
-     console.log("token here",token);
-     res.cookie("access_token", token, {httpOnly: true, sameSite: 'none',  maxAge: 24 * 60 * 60 * 1000}).status(200).json(otherData);
-
-     
+     res.cookie("access_token",token,{httpOnly:true}).status(200).json(otherData);
+     console.log("Access token",token)
   }catch(err)
   {
     next(err); 

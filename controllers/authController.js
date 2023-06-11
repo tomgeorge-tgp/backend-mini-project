@@ -5,7 +5,7 @@ import { handleError } from "../error.js";
 
 const register = async (req, res,next) => {
     // const { fulName,lastName,phoneNumber,email,password,address,city,state,country,zipCode } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     try{
 
     
@@ -33,7 +33,7 @@ const register = async (req, res,next) => {
 }
 
 const login =async(req,res,next)=>{
-  console.log("req",req.body);
+  // console.log("req",req.body);
   try{
      const user = await User.findOne({email:req.body.email});
      if (!user) return next(handleError(404,"User not found"));

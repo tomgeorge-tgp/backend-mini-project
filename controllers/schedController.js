@@ -3,60 +3,59 @@ import { handleError } from "../error.js";
 import User from "../models/User.js";
 import Book from "../models/Booking.js"
 
-export const schedSession=async(req,res)=>{
-    try{
-        var {userId,date,start,end} = req.body
-       
-                
-        let session = {
-            counsellorid:userId,
-            date:date
 
-        };
-        
-        const sessionDuration = 60 * 60 * 1000; // 1 hour in milliseconds
-       
-        let currentSessionStart = new Date(start);
-        
-        const End=new Date(end)
-        if (currentSessionStart>End){
-            return res.status(409).json("End is less than start Request denied")
-        }
-        while (currentSessionStart < End) {
-        const currentSessionEnd = new Date(currentSessionStart.getTime() + sessionDuration);
-        
-        if (currentSessionEnd > End) {
-            //currentSessionEnd.setTime(end.getTime());
-            break
-        }
-              
+export const addSchedule = async (req, res) => {
+  const scheduleData = req.body.schedule;
+  const userId = req.body.userId;
+console.log("scheduleData",scheduleData);
+  try {
+    Object.keys(scheduleData).forEach(async (date) => {
+      Schedule.findOneAndUpdate(
+        { userId, date },
+        { times: scheduleData[date] },
+        { upsert: true, new: true }
+      )
+        .then((schedule) => {
+          console.log('Schedule saved:', schedule);
+        })
+        .catch((err) => console.error(err));
+    });
 
-        let newSession=session
-        newSession["start"]=currentSessionStart
-        newSession["end"]=currentSessionEnd
-        console.log(newSession,"new")
-        let saveNewSession=new Schedule(newSession)
-        try{
-        let savedSession=await saveNewSession.save()
-        console.log(savedSession)}
-        catch(error){
-            
-            handleError(409,error)
-            console.log("error1")
-            return res.status(409).json(saveNewSession+"session is repeated")
-            
-        }
-        currentSessionStart = new Date(currentSessionEnd);
-       
-        }
-        console.log("hi")
-        res.status(200).json(req.body)
+    res.status(200).json({ message: 'Schedule saved successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error saving schedule' });
+  }
+};
+export const getUserSchedule = async (req, res) => {
+    // const scheduleData = req.body.sche;
+    const userId = req.params.id;
+     console.log("user",userId);
+    try {
+        const schedule = await Schedule.find({userId:req.params.id}).sort({
+            createAt:-1,
+        }); 
+        // console.log("schedule",schedule);
+        res.status(200).json(schedule); 
+    } catch (error) {
+      
     }
-    catch(err){
-        handleError(500,err)
+  };
+  export const getSchedule = async (req, res) => {
+    // console.log("here");
+    try {
+      const schedule = await Schedule.find().sort({ date: 1, 'times.start': 1 });
+      res.status(200).json(schedule);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching schedule data' });
     }
+  };
+  
 
-}
+
+
+
+
 
 export  const getSched=async(req,res)=>{
 

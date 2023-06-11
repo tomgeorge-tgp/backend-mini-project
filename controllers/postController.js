@@ -134,7 +134,7 @@ export const getExplorePosts = async (req, res, next) => {
     }
   }
   export const getComment = async (req, res, next) => {
-    console.log("here",req.body);
+    // console.log("here",req.body);
     try{
         let goodPost={};
         const data={

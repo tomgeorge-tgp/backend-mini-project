@@ -1,24 +1,24 @@
  import mongoose from  "mongoose"
 const BookingSchema =new mongoose.Schema({
-    counsellorid:{
+    counsellorId:{
         type:String,
         required:true,
     },
-    userid:{
+    userId:{
         type:String,
         required:true,
     },
     date:{
-        type:Date,
+        type:String,
         required:true,
     },
-    start:{
-        type:Date,
+    from:{
+        type:String,
         required:true,
 
     },
-    end:{
-        type:Date,
+    to:{
+        type:String,
         required:true,
 
     },

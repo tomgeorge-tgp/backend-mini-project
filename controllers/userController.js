@@ -4,7 +4,7 @@ export const getUser = async (req, res, next) => {
    try{
         const user = await User.findById(req.params.id);
         res.status(200).json(user);
-        console.log(user +"Signed in")
+        // console.log(user +"Signed in")
    }
    catch(err)
    {

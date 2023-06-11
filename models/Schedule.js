@@ -1,33 +1,28 @@
-import mongoose from "mongoose";
-const ScheduleSchema =new mongoose.Schema({
-    counsellorid:{
-        type:String,
-        required:true,
-    },
-    date:{
-        type:Date,
-        required:true,
-        
-        
-    },
-    start:{
-        type:Date,
-        required:true,
-        
+import mongoose from  "mongoose"
 
+const ScheduleSchema = new mongoose.Schema({
+  date: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  times: [{
+    from: {
+      type: String,
+      required: true
     },
-    end:{
-        type:Date,
-        required:true,
-
-    },
-    status:{
-        type:Boolean,//True indicates session available ,False not available
-        default:true,
+    to: {
+      type: String,
+      required: true
     }
-    
+  }],
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  }
+});
 
-})
-ScheduleSchema.index({userId:1,start:1,end:1},{unique:true})
 
-export default mongoose.model("Schedule", ScheduleSchema);
+
+export default mongoose.model('Schedule',ScheduleSchema);

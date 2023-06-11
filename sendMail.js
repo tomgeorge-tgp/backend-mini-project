@@ -12,6 +12,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+
 // Define the email options
 const mailOptions = {
   from: 'sumeghkrishna123@gmail.com',       // Sender email address

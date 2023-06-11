@@ -112,7 +112,7 @@ export const bookSes=async(req,res)=>{
     try {
         let schedule = await Schedule.findById(req.query._id);
         console.log(schedule)
-        
+        console.log("test")
         let bookSession={
             counsellorid:schedule.counsellorid,
             userid:req.query.id,
@@ -123,63 +123,25 @@ export const bookSes=async(req,res)=>{
         }
 
         schedule.status=false
-        await schedule.save()       
+        await schedule.save()
+        console.log("update")
+        // bookSession["userid"]=req.query.id
+        console.log(bookSession)
         const saveBookSession=new Book(bookSession)
         const savedBookSession=await saveBookSession.save()
-       try{
-                mailOptions["subject"]="There is a booking"
-                
-                let Username=await  User.find({_id:req.query.id})
-                
-                let Name=Username[0]["fullname"]
-                
-                let bookDate=bookSession.date;
-                
-                let DD,MM,YY;
-                DD=bookDate.getDate()
-                MM=bookDate.getMonth()
-                YY=bookDate.getFullYear()
-                
-            
-               
-                const formattext=(time)=>{
-                    let timeH=time.getHours(),timeM=time.getMinutes()
-                    if(parseInt(timeM)<11)
-                        timeM='0'+timeM
+        mailOptions["subject"]="There is a booking"
+        let Username=await  User.find({_id:req.query.id})
+        mailOptions["text"]=Username[0]["fullname"]+" Has booked a session on " +bookSession.date+" from "+bookSession.start+" to "+bookSession.end
+        console.log(mailOptions)
 
-                    if ((parseInt(timeH)>12))
-                        time=`${parseInt(timeH)-12}:${timeM} PM`
-
-                                   
-                    else
-                        time=`${timeH}:${timeM} AM`
-                    
-                     return time
-                     
-                }
-
-                let start=formattext(bookSession.start),end=formattext(bookSession.end);
-                
-                
-             
-
-
-                mailOptions["text"]=`${Name} has booked a session on ${DD}/${MM}/${YY} from ${start} to ${end}`;       
-                
-
-                transporter.sendMail(mailOptions, (error, info) => {
-                    if (error) {
-                    console.error('Error sending email:', error);
-                    } else {
-                    console.log('Email sent:', info.response,mailOptions);
-                    }
-                });
-                
-       }
-       catch(err)
-       {
-        console.log("error test",err)
-       }
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.error('Error sending email:', error);
+            } else {
+              console.log('Email sent:', info.response,mailOptions);
+            }
+          });
+          
         
         
         res.status(200).json(savedBookSession)

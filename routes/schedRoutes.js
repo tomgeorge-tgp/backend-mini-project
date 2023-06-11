@@ -7,5 +7,5 @@ schedRoutes.get('/:id',getUserSchedule) //TO schedule a session
 schedRoutes.get('/',getSchedule) //available  sessions
 schedRoutes.get('/booked',getScheduledSes)//booked seesions
 schedRoutes.delete('/:_id',deleteSchedule)
-schedRoutes.post('/booking/:_id/:id',bookSes)
+schedRoutes.post('/booking',bookSes);
 export default schedRoutes

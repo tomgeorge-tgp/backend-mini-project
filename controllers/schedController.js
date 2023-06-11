@@ -2,6 +2,7 @@ import Schedule from "../models/Schedule.js"
 import { handleError } from "../error.js";
 import User from "../models/User.js";
 import Book from "../models/Booking.js"
+import {transporter,mailOptions} from "../sendMail.js"
 
 
 export const addSchedule = async (req, res) => {
@@ -126,6 +127,16 @@ export const bookSes=async(req,res)=>{
         console.log(bookSession)
         const saveBookSession=new Book(bookSession)
         const savedBookSession=await saveBookSession.save()
+        mailOptions["subject"]="There is a booking"
+        mailOptions["text"]=User.find(bookSession.userid).fullname
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.error('Error sending email:', error);
+            } else {
+              console.log('Email sent:', info.response);
+            }
+          });
+          
         
         
         res.status(200).json(savedBookSession)

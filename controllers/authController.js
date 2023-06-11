@@ -32,7 +32,6 @@ const register = async (req, res,next) => {
 }
 
 const login =async(req,res,next)=>{
-  // console.log("req",req.body);
   try{
      const user = await User.findOne({email:req.body.email});
      if (!user) return next(handleError(404,"User not found"));

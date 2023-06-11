@@ -23,11 +23,11 @@ export let mailOptions = {
   //html: '<p>This is the email html body.</p>', // HTML body (optional)
 };
 
-// // Send the email
-// transporter.sendMail(mailOptions, (error, info) => {
-//   if (error) {
-//     console.error('Error sending email:', error);
-//   } else {
-//     console.log('Email sent:', info.response);
-//   }
-// });
+// Send the email
+transporter.sendMail(mailOptions, (error, info) => {
+  if (error) {
+    console.error('Error sending email:', error);
+  } else {
+    console.log('Email sent:', info.response);
+  }
+});

@@ -111,7 +111,6 @@ export  const deleteSchedule=async(req,res)=>{
 export const bookSes=async(req,res)=>{
     try {
         let schedule = await Schedule.findById(req.query._id);
-        console.log(schedule)
         console.log("test")
         let bookSession={
             counsellorid:schedule.counsellorid,
@@ -130,15 +129,12 @@ export const bookSes=async(req,res)=>{
         const saveBookSession=new Book(bookSession)
         const savedBookSession=await saveBookSession.save()
         mailOptions["subject"]="There is a booking"
-        let Username=await  User.find({_id:req.query.id})
-        mailOptions["text"]=Username[0]["fullname"]+" Has booked a session on " +bookSession.date+" from "+bookSession.start+" to "+bookSession.end
-        console.log(mailOptions)
-
+        mailOptions["text"]=User.find(bookSession.userid).fullname
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
               console.error('Error sending email:', error);
             } else {
-              console.log('Email sent:', info.response,mailOptions);
+              console.log('Email sent:', info.response);
             }
           });
           

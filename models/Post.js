@@ -9,25 +9,11 @@ const PostSchema =new mongoose.Schema({
         type:String,
         required:true,
     },
-    anonymous:{
-        type:Boolean,
-        default:true,
-        required:true,
-    },
-    verified:{
-        type:Boolean,
-        default:false,
-        required:true,
-    },
     content:{
         type:String,
         required:true,
     },
     likes:{
-        type:Array,
-        defaultValue:[],
-    },
-    comments:{
         type:Array,
         defaultValue:[],
     },

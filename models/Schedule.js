@@ -2,17 +2,17 @@ import mongoose from  "mongoose"
 
 const ScheduleSchema = new mongoose.Schema({
   date: {
-    type: String,
+    type: Date,
     required: true,
     unique: true
   },
   times: [{
     from: {
-      type: String,
+      type: Date,
       required: true
     },
     to: {
-      type: String,
+      type: Date,
       required: true
     }
   }],

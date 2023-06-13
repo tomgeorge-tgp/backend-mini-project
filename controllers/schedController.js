@@ -2,10 +2,11 @@ import Schedule from "../models/Schedule.js"
 import { handleError } from "../error.js";
 import User from "../models/User.js";
 import Book from "../models/Booking.js"
-import {transporter,mailOptions} from "../sendMail.js"
+// import {transporter,mailOptions} from "../sendMail.js"
 
 
 export const addSchedule = async (req, res) => {
+    console.log("here");
   const scheduleData = req.body.schedule;
   const userId = req.body.userId;
 console.log("scheduleData",scheduleData);

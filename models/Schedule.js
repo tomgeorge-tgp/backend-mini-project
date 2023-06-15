@@ -2,18 +2,18 @@ import mongoose from  "mongoose"
 
 const ScheduleSchema = new mongoose.Schema({
   date: {
-    type: Date,
+    type: String,
     required: true,
     unique: true
   },
   times: [{
     from: {
-      type: Date,
-      required: true
+      type: String,
+      // required: true
     },
     to: {
-      type: Date,
-      required: true
+      type: String,
+      // required: true
     }
   }],
   userId: {

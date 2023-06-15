@@ -24,7 +24,7 @@ const register = async (req, res,next) => {
     const {password,...otherData}=newUser._doc;
     res.cookie("access_token",token,{
       httpOnly:true,
-    }).status(200).json(otherData);
+    }).status(200).json({token,otherData});
   }
   catch (err) {
      next(err);
@@ -42,7 +42,7 @@ const login =async(req,res,next)=>{
      const token =jwt.sign({id:user._id},process.env.JWT);
      const {password,...otherData} = user._doc;
 
-     res.cookie("access_token",token,{httpOnly:true}).status(200).json(otherData);
+     res.cookie("access_token",token,{httpOnly:true}).status(200).json({token,otherData});
      console.log("Access token",token)
   }catch(err)
   {

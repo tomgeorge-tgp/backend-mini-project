@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import Post from "../models/Post.js";
 export const getUser = async (req, res, next) => {
+    // console.log("req",req.params);
    try{
         const user = await User.findById(req.params.id);
         res.status(200).json(user);
@@ -13,7 +14,9 @@ export const getUser = async (req, res, next) => {
 }
 
 export const updateUser = async (req, res) =>{
-    if(req.params.id == req.user.id){
+    // console.log("req update",req.body);
+//    console.log("req.params",req.params);
+    if(req.params.id == req.body._id){
     try{
           const updateUser = await User.findByIdAndUpdate(req.params.id,
             {
@@ -22,6 +25,7 @@ export const updateUser = async (req, res) =>{
             {
                 new:true,
             });
+            console.log("updateUser",updateUser)
             res.status(200).json(updateUser);
        }
        catch(err)

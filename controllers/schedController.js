@@ -6,10 +6,10 @@ import Book from "../models/Booking.js"
 
 
 export const addSchedule = async (req, res) => {
-    console.log("here");
+    // console.log("here");
   const scheduleData = req.body.schedule;
   const userId = req.body.userId;
-console.log("scheduleData",scheduleData);
+// console.log("scheduleData",scheduleData);
   try {
     Object.keys(scheduleData).forEach(async (date) => {
       Schedule.findOneAndUpdate(
@@ -32,7 +32,7 @@ console.log("scheduleData",scheduleData);
 export const getUserSchedule = async (req, res) => {
     // const scheduleData = req.body.sche;
     const userId = req.params.id;
-     console.log("user",userId);
+    //  console.log("user sched",userId);
     try {
         const schedule = await Schedule.find({userId:req.params.id}).sort({
             createAt:-1,
@@ -108,7 +108,7 @@ export  const deleteSchedule=async(req,res)=>{
         handleError(500,error)
     }
 }
-export const bookSes=async(req,res)=>{
+export const  bookSes=async(req,res)=>{
     try {
         let schedule = await Schedule.findById(req.query._id);
         console.log("test")

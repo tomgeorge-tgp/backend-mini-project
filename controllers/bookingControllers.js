@@ -3,6 +3,7 @@ import Booking from "../models/Booking.js";
 import Schedule from "../models/Schedule.js"
 import User from "../models/Schedule.js"
 import moment from 'moment';
+import{transporter,mailOptions} from '../sendMail.jsse'
 // import "../api/googleCalanderTest.js"
 
 
@@ -157,12 +158,30 @@ export const addBooking = async (req, res) => {
       return res.status(500).json({ message: 'Error saving schedule' });
     }
 }
+
+
 export const deleteBooking = async(req,res,next)=>{
   console.log("delete",req.params);
     // console.log(req.query);
       try{
+          
           const booking = await Booking.findById(req.params.id);
+             let userid=booking.userId
+             console.log("userid",userid)
+             mailOptions["subject"]="Your booking has got deleted"
+             mailOptions["to"]=userid.email
+             mailOptions["text"]="Your scheduled session on"+booking.date+" is deleted as there is some inconvenience for the counsellor"+ " We regret to inform the same"
                await booking.deleteOne();
+                // Send the email
+            transporter.sendMail(mailOptions, (error, info) => {
+              if (error) {
+                console.error('Error sending email:', error);
+              } else {
+                console.log('Email sent:', info.response);
+              }
+            });
+                          
+
                res.status(200).json("booking has been deleted");
         
       }

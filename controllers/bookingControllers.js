@@ -1,9 +1,9 @@
 
 import Booking from "../models/Booking.js";
 import Schedule from "../models/Schedule.js"
-import User from "../models/Schedule.js"
+import User from "../models/User.js"
 import moment from 'moment';
-import{transporter,mailOptions} from '../sendMail.jsse'
+import{transporter,mailOptions} from '../sendMail.js'
 // import "../api/googleCalanderTest.js"
 
 
@@ -166,11 +166,20 @@ export const deleteBooking = async(req,res,next)=>{
       try{
           
           const booking = await Booking.findById(req.params.id);
-             let userid=booking.userId
-             console.log("userid",userid)
+          console.log(req.params.id)
+             var userId=booking.userId
+             console.log("userid",userId)
              mailOptions["subject"]="Your booking has got deleted"
-             mailOptions["to"]=userid.email
-             mailOptions["text"]="Your scheduled session on"+booking.date+" is deleted as there is some inconvenience for the counsellor"+ " We regret to inform the same"
+             try{
+              const user = await User.findById(userId);
+              console.log("email",user)
+              mailOptions["to"]=user.email
+              mailOptions["text"]="Your scheduled session on"+booking.date+" is deleted as there is some inconvenience for the counsellor"+ " We regret to inform the same"}
+             catch(err){
+              console.log("error in finding",err)
+             }
+            
+            
                await booking.deleteOne();
                 // Send the email
             transporter.sendMail(mailOptions, (error, info) => {

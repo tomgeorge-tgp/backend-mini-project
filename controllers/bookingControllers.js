@@ -43,8 +43,8 @@ export const addBooking = async (req, res) => {
         // console.log("schedule.time",schedule.times[0]);
         const BookingTimeFrom= moment(req.body.from, 'h:mm:ss a');
         const BookingTimeTo= moment(req.body.to, 'h:mm:ss a');
-        const ScheduleTimeFrom = moment(schedule.times[0].from, 'h:mm a');
-         const SchdeuleTimeTo = moment(schedule.times[0].to, 'h:mm a');
+        const ScheduleTimeFrom = moment(schedule.times[0].from, 'h:mm:ss a');
+         const SchdeuleTimeTo = moment(schedule.times[0].to, 'h:mm:ss a');
 
          // if both time are equal to delete that date from database
         if(BookingTimeFrom.isSame(ScheduleTimeFrom) && BookingTimeTo.isSame(SchdeuleTimeTo)){

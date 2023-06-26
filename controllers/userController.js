@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 import Post from "../models/Post.js";
-import {transporter,mailOptions} from "../sendMail.js"
+
 export const getUser = async (req, res, next) => {
     // console.log("req",req.params);
    try{

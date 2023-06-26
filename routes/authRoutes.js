@@ -15,7 +15,7 @@ import{
 
 authRoutes.post('/register', register);
 authRoutes.post('/login', login);
-authRoutes.post('/registercouncil',registerCouncil)// for registeration of office bearers
+// authRoutes.post('/registercouncil',registerCouncil)// for registeration of office bearers
 //authRoutes.delete('/logout', authenticateUser, logout);
 
 

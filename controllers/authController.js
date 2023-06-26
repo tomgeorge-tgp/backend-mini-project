@@ -12,6 +12,10 @@ const register = async (req, res,next) => {
     
     const currentUserEmail = req.body.email;
     const userType=req.body.type;
+    if( (userType=="Core")||(userType=="Counsellor")){
+        if(req.body.pin!="1234")
+        return  res.status(401).json("Invalid security pin")
+    }
     const emailAlreadyExists = await User.findOne({ currentUserEmail });
     if (emailAlreadyExists) {
       throw new CustomError.BadRequestError('Email already exists');
@@ -31,35 +35,36 @@ const register = async (req, res,next) => {
      next(err);
   }
 }
-const registerCouncil = async (req, res,next) => {
-  // const { fulName,lastName,phoneNumber,email,password,address,city,state,country,zipCode } = req.body;
-  // console.log(req.body);
-  try{
+// }
+// const registerCouncil = async (req, res,next) => {
+//   // const { fulName,lastName,phoneNumber,email,password,address,city,state,country,zipCode } = req.body;
+//   // console.log(req.body);
+//   try{
 
-  if(req.body.pin=="1234"){
-  const currentUserEmail = req.body.email;
-  const userType=req.body.type;
-  const emailAlreadyExists = await User.findOne({ currentUserEmail });
-  if (emailAlreadyExists) {
-    throw new CustomError.BadRequestError('Email already exists');
-  }
-  const salt= bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(req.body.password,salt);
-  const newUser =new User({...req.body,password:hash});
-  await newUser.save();
 
-  const token =jwt.sign({id:newUser._id},process.env.JWT);
-  const {password,...otherData}=newUser._doc;
-  res.cookie("access_token",token,{
-    httpOnly:true,
-  }).status(200).json({token,otherData});
-}
-else return res.status(200).json("Invalid security pin")
-}
-catch (err) {
-   next(err);
-}
-}
+//   const currentUserEmail = req.body.email;
+//   const userType=req.body.type;
+//   const emailAlreadyExists = await User.findOne({ currentUserEmail });
+//   if (emailAlreadyExists) {
+//     throw new CustomError.BadRequestError('Email already exists');
+//   }
+//   const salt= bcrypt.genSaltSync(10);
+//   const hash = bcrypt.hashSync(req.body.password,salt);
+//   const newUser =new User({...req.body,password:hash});
+//   await newUser.save();
+
+//   const token =jwt.sign({id:newUser._id},process.env.JWT);
+//   const {password,...otherData}=newUser._doc;
+//   res.cookie("access_token",token,{
+//     httpOnly:true,
+//   }).status(200).json({token,otherData});
+// }
+// else return res.status(200).json("Invalid security pin")
+// }
+// catch (err) {
+//    next(err);
+// }
+// }
 
 const login =async(req,res,next)=>{
   try{
@@ -112,7 +117,7 @@ catch (err) {
    export {
     register,
     login,
-    registerCouncil,
+  
     forgotPassword
     // logout,
     

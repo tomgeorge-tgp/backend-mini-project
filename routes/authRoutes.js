@@ -6,7 +6,7 @@ const authRoutes = express.Router();
 import{
   register,
   login,
-  registerCouncil
+  // registerCouncil
 //   logout,
 //   verifyEmail,
 //   forgotPassword,
